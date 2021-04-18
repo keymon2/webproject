@@ -1,6 +1,16 @@
 import React from 'react';
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
+import { CCard,
+    CCardBody,
+    CCardHeader,
+    CCarousel,
+    CCarouselCaption,
+    CCarouselControl,
+    CCarouselIndicators,
+    CCarouselInner,
+    CCarouselItem,
+    CCol,
+    CRow } from '@coreui/react'
+import pro from './yum.jpeg'
 
 const User = ({ match }) => {
     const user = {
@@ -19,6 +29,7 @@ const User = ({ match }) => {
                     <CCard>
                         <CCardHeader>
                             User id: {match.params.id}
+                            <img className="d-block w-100" src={pro}/>
                         </CCardHeader>
                         <CCardBody>
                             <table className="table table-striped table-hover">
@@ -35,16 +46,6 @@ const User = ({ match }) => {
                                     }
                                 </tbody>
                             </table>
-                        </CCardBody>
-                    </CCard>
-                </CCol>
-                <CCol xs="12" sm="6" md="4">
-                    <CCard>
-                        <CCardHeader>
-                            Yum
-                        </CCardHeader>
-                        <CCardBody>
-                          <image src="./yum.jpeg"/>
                         </CCardBody>
                     </CCard>
                 </CCol>
