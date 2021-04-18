@@ -1,5 +1,7 @@
 import React from 'react';
 
+const Schedule =React.lazy(() => import('./views/new/schedule/Schedule'));
+
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
 const Tables = React.lazy(() => import('./views/base/tables/Tables'));
 
@@ -36,7 +38,13 @@ const Colors = React.lazy(() => import('./views/theme/colors/Colors'));
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'));
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
-const User = React.lazy(() => import('./views/users/User'));
+const User = React.lazy(() => import('./views/new/user/User'));
+const Album = React.lazy(() => import('./views/new/user/album/Album'));
+const PostsX = React.lazy(() => import('./views/new/user/postsX/PostsX'));
+const Chat = React.lazy(() => import('./views/new/user/chat/Chat'));
+const MyGroups = React.lazy(() => import('./views/new/group/MyGroups'));
+const SearchGroups = React.lazy(() => import('./views/new/group/SearchGroups') );
+const MyToDo = React.lazy(() => import('./views/new/schedule/MyToDo') )
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -77,8 +85,15 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/user', exact: true,  name: 'User', component: Users },
+  { path: '/user/userprofile',  name: 'User', component: User },
+  { path: '/user/album', name: 'Album', component: Album },
+  { path: '/user/postsX', name: 'PostsX', component: PostsX },
+  { path: '/user/chat', name: 'Chat', component: Chat },
+  { path: '/myGroups', name: 'MyGroups', component: MyGroups },
+  { path: '/searchGroups', name: 'SearchGroups', component: SearchGroups },
+  { path: '/myToDos', name: 'Today To Do', component: MyToDo },
+  { path: '/schedules', name: 'Schedule', component: Schedule },
 ];
 
 export default routes;

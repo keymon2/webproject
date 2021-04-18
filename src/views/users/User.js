@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
@@ -39,3 +39,4 @@ const User = ({match}) => {
 }
 
 export default User
+*/
