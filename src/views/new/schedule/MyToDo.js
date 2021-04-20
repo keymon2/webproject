@@ -1,9 +1,9 @@
 import React from 'react';
 
-const MyToDo = (props) => {
+const MyToDo = () => {
     return (
         <div>
-            MyToDo
+            
         </div>
     );
 };
