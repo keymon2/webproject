@@ -9,7 +9,7 @@ import pro from './yum.jpeg'
 const User = ({ match }) => {
     const user = {
         id: 1234,
-        name: "seungWon Lee",
+        name: "이승원과 홍성현",
         birth: 970112,
         SubScribe: ["HIKEY", "SeoulRun"],
         comments: "I LOVE READING",

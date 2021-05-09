@@ -16,6 +16,7 @@ const loading = (
 )
 
 const TheContent = () => {
+  
   return (
     <main className="c-main">
       <CContainer fluid>
@@ -35,7 +36,7 @@ const TheContent = () => {
                   )} />
               )
             })}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/" to="/user/userprofile" />
           </Switch>
         </Suspense>
       </CContainer>

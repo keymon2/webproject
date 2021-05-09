@@ -32,7 +32,7 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="App">
-        <h1>ChatBox</h1>
+        <h1>Prototype</h1>
         {/* send stored messages as props to chat window */}
         <ChatWindow messagesList={this.state.messages} />
         {/* send submitted props to chat composer */}
