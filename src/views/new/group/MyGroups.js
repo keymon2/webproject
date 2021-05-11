@@ -4,8 +4,6 @@ import { CCard,
     CCardHeader,
     CCol,
     CCardGroup } from '@coreui/react'
-import { element } from 'prop-types';
-import { cilSpaceBar } from '@coreui/icons';
 
 const MyGroups = (props) => {
     const groupList =[

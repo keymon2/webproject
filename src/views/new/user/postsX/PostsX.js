@@ -2,12 +2,6 @@ import React from 'react';
 import { CCard,
     CCardBody,
     CCardHeader,
-    CCarousel,
-    CCarouselCaption,
-    CCarouselControl,
-    CCarouselIndicators,
-    CCarouselInner,
-    CCarouselItem,
     CCol,
     CRow } from '@coreui/react'
 

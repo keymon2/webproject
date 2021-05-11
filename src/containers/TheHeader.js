@@ -7,7 +7,7 @@ import {
 } from '@coreui/react'
 
 // routes config
-import routes from '../routes'
+
 
 
 const TheHeader = () => {

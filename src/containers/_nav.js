@@ -1,15 +1,12 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
 
 const _nav =  [
-  
   {
     _tag: 'CSidebarNavDropdown',
     name: 'User',
     route: '/user',
     icon: 'cil-cursor',
     _children:[
-      {
+      { 
         _tag: 'CSidebarNavItem',
         name: 'User',
         to: '/user/userprofile',  

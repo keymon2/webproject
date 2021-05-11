@@ -1,0 +1,19 @@
+.photo {
+    height: 130px;
+    width: 130px;
+    border-radius: 30%;
+    overflow: hidden;
+    position: relative;
+    left: 75px;
+    top: -100px;
+  }
+
+  .back {
+    height: 300px;
+    width: 300px;
+      background-size: cover;
+      position: relative;
+        left: 10px;
+        top: 0px;
+        border-radius: 30%;
+  }

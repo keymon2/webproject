@@ -1,4 +1,6 @@
-import React from 'react'
+import React,{Component} from 'react'
+import {createUser} from '../../../controller/ContollerUser'
+
 import {
   CButton,
   CCard,
@@ -15,16 +17,64 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const Register = () => {
-  return (
+
+
+class Register extends Component{
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: "",
+      useremail : "",
+      userpassword : "",
+      repet: "",
+      message: "Repeat-password"
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  
+
+  handleSubmit= async e =>{
+    e.preventDefault();
+      
+      if(this.state.userpassword === this.state.repet){
+        const response = await createUser({
+          "name": this.state.username,
+          "email": this.state.useremail,
+          "password": this.state.userpassword
+        });
+        if(response.success){
+          this.props.history.push('/login')
+        }
+        else{
+          this.setState({
+            username: "",
+            useremail : "",
+            userpassword : "",
+            repet: "",
+            message: "Repeat-password"
+          })
+        }
+    }else{
+      this.setState({
+        message: "wrong-plz-repeat same password",
+        repet:""
+      })
+  
+    }
+  }
+
+  
+  render(){
+    return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
               <CCardBody className="p-4">
-                <CForm>
-                  <h1>Register</h1>
+                <CForm onSubmit = {this.handleSubmit}>
+                  <h1>회원가입</h1>
                   <p className="text-muted">Create your account</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -32,13 +82,15 @@ const Register = () => {
                         <CIcon name="cil-user" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Username" autoComplete="username" />
+                    <CInput type="text" placeholder="Username" autoComplete="username" 
+                    onChange ={ e =>{this.setState({username: e.target.value })}} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>@</CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" placeholder="Email" autoComplete="email" />
+                    <CInput type="text" placeholder="Email" autoComplete="email" 
+                    onChange ={ e => {this.setState({useremail: e.target.value })}} />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -46,7 +98,8 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Password" autoComplete="new-password" />
+                    <CInput type="password" placeholder="Password" autoComplete="new-password" 
+                    onChange = {e => {this.setState({userpassword: e.target.value })}} />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -54,27 +107,22 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" placeholder="Repeat password" autoComplete="new-password" />
+                    <CInput type="password" placeholder={this.state.message}  
+                    onChange ={e => {this.setState({repet: e.target.value })}}
+                    value = {this.state.repet} />
                   </CInputGroup>
-                  <CButton color="success" block>Create Account</CButton>
+                  <CButton color="success" block type= "submit"> Create Account</CButton>
                 </CForm>
               </CCardBody>
               <CCardFooter className="p-4">
-                <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block><span>facebook</span></CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block><span>twitter</span></CButton>
-                  </CCol>
-                </CRow>
+                
               </CCardFooter>
             </CCard>
           </CCol>
         </CRow>
       </CContainer>
     </div>
-  )
+  )}
 }
 
 export default Register

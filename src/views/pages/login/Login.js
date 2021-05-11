@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import { Link } from 'react-router-dom'
-
+import {loginUser} from '../../../controller/ContollerUser'
 
 import {
   CButton,
@@ -19,16 +19,6 @@ import {
 import CIcon from '@coreui/icons-react'
 
 
-async function loginUser(credentials) {
-  return fetch('http://localhost:4502/api/Login/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
 
 
 
@@ -47,16 +37,18 @@ class Login extends Component{
   handleSubmit = async e => {
     e.preventDefault();
     
-    console.log("running")
     const response = await loginUser({
-      useremail: this.state.useremail,
-      userpassword: this.state.userpassword
+      "useremail": this.state.useremail,
+      "userpassword": this.state.userpassword,
     });
-    if(response.success){
-      this.props.setToken(response.token);
-    }else{
-      this.setState({useremail: "", userpassword: ""})
-    }
+      if(response.success){
+        this.setState({
+          useremail : "",
+          userpassword : ""
+        })
+        this.props.history.push('/home')
+      }
+    
   }
   
 
@@ -86,15 +78,17 @@ class Login extends Component{
                             <CIcon name="cil-lock-locked" />
                           </CInputGroupText>
                         </CInputGroupPrepend>
-                        <CInput type="password" placeholder="Password" autoComplete="current-password" onChange ={e=>{this.setState({userpassword: e.target.vlaue})}} />
+                        <CInput type="password" placeholder="Password" autoComplete="current-password" onChange ={e=>{this.setState({userpassword: e.target.value})}} />
                       </CInputGroup>
                       <CRow>
                         <CCol xs="6">
                           <CButton type="submit" color="primary" className="px-4">Login</CButton>
                         </CCol>
-                        <CCol xs="6" className="text-right">
-                          <CButton color="link" className="px-0">Forgot password?</CButton>
-                        </CCol>
+                        <Link to= " /login">
+                          <CCol xs="6" className="text-right">
+                            <CButton color="link" className="px-0">Forgot password?</CButton>
+                          </CCol>
+                        </Link>
                       </CRow>
                     </CForm>
                   </CCardBody>
