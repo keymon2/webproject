@@ -1,12 +1,13 @@
-import React from 'react';
-import Calender from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
-const Schedule = (props) => {
-    return (
-        <div>
-            <Calender/>
-        </div>
-        );
-};
+import React, {Component} from 'react';
+import './App.css';
+import Month from "./month/Month";
 
-export default Schedule;
+class App extends Component {
+  render() {
+    return (
+        <Month/>
+    );
+  }
+}
+
+export default App;
