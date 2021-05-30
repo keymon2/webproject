@@ -11,3 +11,6 @@ export function getToken(){
     }
   }
   
+export function removeToken(){
+  sessionStorage.removeItem('token')
+}

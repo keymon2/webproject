@@ -35,11 +35,14 @@ export async function createUser(credentials) {
 
 export async function getProfileUser() {
     const Token = getToken();
-    
+    console.log(Token)
+    if(Token == false) return false;
     return fetch('http://localhost:4502/api/User/findId',{
         method: 'GET',
         headers : {
           Authorization : "Bearer " + Token,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
      }
     })
     .then(res => res.json())
@@ -47,6 +50,7 @@ export async function getProfileUser() {
 
 export async function updateUser(credentials){
   const Token = getToken();
+  if(Token == false) return false;
   console.log(JSON.stringify(credentials))
   return fetch('http://localhost:4502/api/User/update',{
       method: 'POST',
@@ -58,4 +62,30 @@ export async function updateUser(credentials){
     })
     .then(res => res.json())
 }
+export async function findAlbum(){
+  const Token = getToken();
+  if(Token == false) return false;
+  return fetch('http://localhost:4502/api/Album/find',{
+      method: 'GET',
+      headers : {
+          'Content-Type': 'application/json',
+          Authorization : "Bearer " + Token,
+      },
+    })
+    .then(res => res.json())
+}
 
+export async function insertAlbum(credentials){
+  const Token = getToken();
+  if(Token == false) return false;
+  console.log(JSON.stringify(credentials))
+  return fetch('http://localhost:4502/api/Album/insert',{
+      method: 'POST',
+      headers : {
+          'Content-Type': 'application/json',
+          Authorization : "Bearer " + Token,
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then(res => res.json())
+}

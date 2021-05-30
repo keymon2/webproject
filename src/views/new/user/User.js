@@ -4,18 +4,16 @@ import "./styles.css"
 import {updateUser} from "../../../controller/ContollerUser.js"
 // react-bootstrap components
 import {
-    Badge,
     Button,
     Card,
     Form,
-    Navbar,
-    Nav,
     Container,
     Row,
     Col,
   } from "react-bootstrap";
 
 import { Component } from 'react';
+import {removeToken,getToken} from '../../../util.js'
 import { cilInputHdmi } from '@coreui/icons';
   
   class User extends Component {
@@ -38,9 +36,13 @@ import { cilInputHdmi } from '@coreui/icons';
     }
 
     async componentDidMount() {
-        const User = await getProfileUser();
-        this.setState({user: User})
-    }
+        const response = await getProfileUser();
+        if( !response ){
+          console.log("asd");
+          this.props.history.push('/login')
+        }
+        this.setState({user: response.data});
+      }
     handlesubmit = async e =>{
         e.preventDefault();
         var input = {};
@@ -85,8 +87,8 @@ import { cilInputHdmi } from '@coreui/icons';
                 userbio: "",
             })  
     }
-    render(){
-
+    render() {
+     
         return (
       <>
         <Container fluid>
@@ -235,20 +237,21 @@ import { cilInputHdmi } from '@coreui/icons';
             </Col>
             <Col md="4">
               <Card className="card-user">
-                <div className="card-image">
+                <div className="back">
                   <img
                     alt="..."
-                    src="https://t1.daumcdn.net/cfile/blog/994212335A710B6C1A"
-                    className= "back"
+                    className="backImg"
+                    src={this.state.user.image1}
+
                   ></img>
                 </div>
                 <Card.Body>
-                  <div className="author">
+                  <div className="photo">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
                       <img
                         alt="..."
-                        className="photo"
-                      src="https://img.insight.co.kr/static/2018/05/24/700/0qgnf8a7rnm459rwq4gs.jpg"
+                       
+                      src={this.state.user.image2}
                       
                       ></img>
                       <h5 className="title">{this.state.user.firstname +" "+ this.state.user.lastname}</h5>

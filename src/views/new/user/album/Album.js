@@ -17,109 +17,70 @@ import 'photoswipe/dist/photoswipe.css'
 import 'photoswipe/dist/default-skin/default-skin.css'
  
 import { Gallery, Item } from 'react-photoswipe-gallery'
+import { findAlbum} from "../../../../controller/ContollerUser.js"
+import "./style.css"
 
- 
-const Sample = () => {
- 
- 
-    return (
-        <div>
-          <Gallery id="my-gallery">
-            <CCard>
-              <CCardHeader>
-                <h2>Running</h2>                
-              </CCardHeader>
-              <CCardBody>
-                <CCarousel>
-                  <CCarouselInner>
-                    <CCarouselItem>
-                      <Item
-                            original="https://www.verywellfit.com/thmb/4I4fua472xNbQTaqeOLIDLG__eU=/1500x1125/smart/filters:no_upscale()/Snapwire-Running-17-38ab6267e82c41a0b03b66469087aefb.jpg"
-                            thumbnail="https://www.verywellfit.com/thmb/4I4fua472xNbQTaqeOLIDLG__eU=/1500x1125/smart/filters:no_upscale()/Snapwire-Running-17-38ab6267e82c41a0b03b66469087aefb.jpg"
-                            width="1024"
-                            height="768"
-                          
-                        >
-                            {({ ref, open }) => (
-                                <img ref={ref} onClick={open} src="https://www.verywellfit.com/thmb/4I4fua472xNbQTaqeOLIDLG__eU=/1500x1125/smart/filters:no_upscale()/Snapwire-Running-17-38ab6267e82c41a0b03b66469087aefb.jpg" />
-                            )}
-                        </Item>
-                    </CCarouselItem>
-                    <CCarouselItem>
-                      <Item
-                            original="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Ludovic_and_Lauren_%288425515069%29.jpg/1200px-Ludovic_and_Lauren_%288425515069%29.jpg"
-                            thumbnail="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Ludovic_and_Lauren_%288425515069%29.jpg/1200px-Ludovic_and_Lauren_%288425515069%29.jpg"
-                            width="1024"
-                            height="768"
-                        >
-                        
-                            {({ ref, open }) => (
-                                <img ref={ref} onClick={open} src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Ludovic_and_Lauren_%288425515069%29.jpg/1200px-Ludovic_and_Lauren_%288425515069%29.jpg" />
-                            )}   
-                        </Item>
-                    </CCarouselItem>
-                    <CCarouselItem>
-                      <Item
-                            original="https://images.theconversation.com/files/380799/original/file-20210127-17-if809z.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop"
-                            thumbnail="https://images.theconversation.com/files/380799/original/file-20210127-17-if809z.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop"
-                            width="1024"
-                            height="768"
-                        >
-                        
-                            {({ ref, open }) => (
-                                <img ref={ref} onClick={open} src="https://images.theconversation.com/files/380799/original/file-20210127-17-if809z.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" />
-                            )}   
-                        </Item>
-                    </CCarouselItem>
-                    <CCarouselItem>
-                      <Item
-                            original="https://media.timeout.com/images/103202155/image.jpg"
-                            thumbnail="https://media.timeout.com/images/103202155/image.jpg"
-                            width="1024"
-                            height="768"
-                        >
-                        
-                            {({ ref, open }) => (
-                                <img ref={ref} onClick={open} src="https://media.timeout.com/images/103202155/image.jpg" />
-                            )}   
-                        </Item>
-                    </CCarouselItem>
-                  </CCarouselInner>
-                  <CCarouselControl direction="prev"/>
-                  <CCarouselControl direction="next"/>  
-                </CCarousel>
-              </CCardBody>             
-            </CCard>         
-          </Gallery>
+class Sample extends React.Component {
+    constructor(props){
+        super (props);
+        this.state = {
+            image: [],
+            tag: ""
+        };
+        this.tagChange = this.tagChange.bind(this)
+    }
+    async componentDidMount(){
+        const data = await findAlbum()
+
+        const image = data.data.image;
+        this.setState({image : image});
+        
+    }
+   tagChange= async (e,changeTag) =>{
+        e.preventDefault();
+
+        this.setState({tag: changeTag})
+   }
+    render() {
+       const image = this.state.image.map( img =>{
+            if(this.state.tag != ""){
+                if(img.location == this.state.tag)
+                ;
+            }   
 
 
 
-
-
-            <Gallery>
+            return (
                 <Item
-                    original="https://placekitten.com/1024/768?image=3"
-                    thumbnail="https://placekitten.com/80/60?image=1"
+                    original = {img.src}
+                    thumbnail = {img.src}
                     width="1024"
                     height="768"
                 >
                     {({ ref, open }) => (
-                        <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=1" />
+                        <img ref={ref} onClick={open} src={img.src}
+                        className ="box-sizing" />
                     )}
                 </Item>
-                <Item
-                    original="https://placekitten.com/1024/768?image=2"
-                    thumbnail="https://placekitten.com/1024/60?image=2"
-                    width="1024"
-                    height="768"
-                >
-                    {({ ref, open }) => (
-                        <img ref={ref} onClick={open} src="https://placekitten.com/80/60?image=2" />
-                    )}
-                </Item>
-            </Gallery>
-        </div>
-    );
+           
+                )})}
+       
+            return (
+            <div>
+                <b > <button> </button></b>
+
+                <br/>
+                <list >       
+                <Gallery  >
+                    <a>
+                    {image}
+                    </a>
+                </Gallery>
+                </list>     
+            </div>);
+        }
+
+    
 };
  
 export default Sample;
