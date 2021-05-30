@@ -19,7 +19,7 @@ import 'photoswipe/dist/default-skin/default-skin.css'
 import { Gallery, Item } from 'react-photoswipe-gallery'
 import { findAlbum} from "../../../../controller/ContollerUser.js"
 import "./style.css"
-import Button from "./button.js"
+
 class Sample extends React.Component {
     constructor(props){
         super (props);
@@ -31,15 +31,16 @@ class Sample extends React.Component {
     }
     async componentDidMount(){
         const data = await findAlbum()
-
         const image = data.data.image;
         this.setState({image : image});
         
     }
    tagChange= async (Tag) =>{
+       console.log("asdasd")
         this.setState({tag: Tag})
    }
     render() {
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
        const image = this.state.image.map( img =>{
             const Tag = this.state.tag
             if(Tag != "전체"){
@@ -79,7 +80,11 @@ class Sample extends React.Component {
         
             return (
                 <div>
-                    <b > <Button  onClick={() =>this.tagChange("전체")} children="전체" /></b>
+                    <b > 
+                        <button className="button" onClick={() =>this.setState({tag: "전체"})} children="전체" />
+                        <button className="button" onClick={() =>this.setState({tag: "personal"})} children="개인" />
+                        <button className="button" onClick={() =>this.setState({tag: "gruop"})} children="그룹" />
+                    </b>
 
                     <br/>
                     <list >       

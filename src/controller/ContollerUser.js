@@ -13,6 +13,7 @@ export async function loginUser(credentials) {
       .then(data => data.json())
 
     if(response.success){
+      console.log(response.data);
         setToken(response.data);
     }
     
