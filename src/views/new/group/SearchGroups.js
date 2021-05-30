@@ -142,4 +142,4 @@ class SearchGroups extends React.Comonent {
       onSearchClick: null,
       onBlur: null,
     };
-export default SearchGroups;
+export default SearchIcon;
