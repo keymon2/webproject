@@ -19,13 +19,13 @@ import 'photoswipe/dist/default-skin/default-skin.css'
 import { Gallery, Item } from 'react-photoswipe-gallery'
 import { findAlbum} from "../../../../controller/ContollerUser.js"
 import "./style.css"
-
+import Button from "./button.js"
 class Sample extends React.Component {
     constructor(props){
         super (props);
         this.state = {
             image: [],
-            tag: ""
+            tag: "전체"
         };
         this.tagChange = this.tagChange.bind(this)
     }
@@ -36,49 +36,61 @@ class Sample extends React.Component {
         this.setState({image : image});
         
     }
-   tagChange= async (e,changeTag) =>{
-        e.preventDefault();
-
-        this.setState({tag: changeTag})
+   tagChange= async (Tag) =>{
+        this.setState({tag: Tag})
    }
     render() {
        const image = this.state.image.map( img =>{
-            if(this.state.tag != ""){
-                if(img.location == this.state.tag)
-                ;
-            }   
+            const Tag = this.state.tag
+            if(Tag != "전체"){
+                if(img.location == Tag){
+                    return (
+                        <Item
+                            original = {img.src}
+                            thumbnail = {img.src}
+                            width="1024"
+                            height="768"
+                        >
+                            {({ ref, open }) => (
+                                <img ref={ref} onClick={open} src={img.src}
+                                className ="box-sizing" />
+                            )}
+                        </Item>
+               
+                    )
+                } 
+            }else{
+                return (
+                    <Item
+                        original = {img.src}
+                        thumbnail = {img.src}
+                        width="1024"
+                        height="768"
+                    >
+                        {({ ref, open }) => (
+                            <img ref={ref} onClick={open} src={img.src}
+                            className ="box-sizing" />
+                        )}
+                    </Item>
+        
+                )}
+        })   
 
-
-
+        
             return (
-                <Item
-                    original = {img.src}
-                    thumbnail = {img.src}
-                    width="1024"
-                    height="768"
-                >
-                    {({ ref, open }) => (
-                        <img ref={ref} onClick={open} src={img.src}
-                        className ="box-sizing" />
-                    )}
-                </Item>
-           
-                )})}
-       
-            return (
-            <div>
-                <b > <button> </button></b>
+                <div>
+                    <b > <Button  onClick={() =>this.tagChange("전체")} children="전체" /></b>
 
-                <br/>
-                <list >       
-                <Gallery  >
-                    <a>
-                    {image}
-                    </a>
-                </Gallery>
-                </list>     
-            </div>);
-        }
+                    <br/>
+                    <list >       
+                    <Gallery  >
+                        <a>
+                        {image}
+                        </a>
+                    </Gallery>
+                    </list>     
+                </div>
+            );}
 
     
 };
