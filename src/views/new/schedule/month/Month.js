@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {DayPilot, DayPilotMonth} from "daypilot-pro-react";
 import "./MonthStyles.css";
 import "./icons/style.css";
-
+import "./style.css"
+import {findSchedule, insertSchedule ,deleteSchedule} from "../../../../controller/ContollerSchedule.js"
 class Month extends Component {
 
   constructor(props) {
@@ -14,7 +15,8 @@ class Month extends Component {
       cellHeaderHeight: 20,
       eventMarginBottom: 5,
       eventEndSpec: "Date",
-      onBeforeEventRender: args => {
+      updateEvents: [],
+       onBeforeEventRender: args => {
         args.data.areas = [
           { top: 6, right: 10, width: 12, height: 14, icon: "icon-triangle-down", visibility: "Visible", action: "ContextMenu", style: "font-size: 12px; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 3px 3px 0px 3px; cursor:pointer;"}
         ];
@@ -24,8 +26,10 @@ class Month extends Component {
         items: [
           {
             text: "Delete",
-            onClick: args => {
+            onClick: async (args) => {
               var e = args.source;
+              console.log(e.data)
+              await deleteSchedule(e.data)
               this.calendar.events.remove(e);
             }
           },
@@ -64,76 +68,65 @@ class Month extends Component {
 
         ]
       }),
-      onTimeRangeSelected: args => {
+      onTimeRangeSelected:  (args) => {
         let dp = this.calendar;
         DayPilot.Modal.prompt("Create a new event:", "Event 1").then(function (modal) {
           dp.clearSelection();
           if (!modal.result) {
             return;
           }
-          dp.events.add(new DayPilot.Event({
+          const event = new DayPilot.Event({
             start: args.start,
             end: args.end,
             id: DayPilot.guid(),
             text: modal.result
-          }));
+          })
+          dp.events.add(event);
         });
       },
+
     };
+    this.submitDB = this.submitDB.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
 
     let first = DayPilot.Date.today().firstDayOfMonth();
-
+    const events = await findSchedule();
+    console.log(events)
     // load event data
     this.setState({
       startDate: DayPilot.Date.today(),
-      events: [
-        {
-          id: 1,
-          text: "Event 1",
-          start: first.addDays(3),
-          end: first.addDays(5),
-          backColor: "#cc0000",
-        },
-        {
-          id: 2,
-          text: "Event 2",
-          start: first.addDays(3),
-          end: first.addDays(4),
-          backColor: "#e69138",
-        },
-        {
-          id: 3,
-          text: "Event 3",
-          start: first.addDays(3),
-          end: first.addDays(3),
-          backColor: "#6aa84f",
-        },
-        {
-          id: 4,
-          text: "Event 4",
-          start: first.addDays(10),
-          end: first.addDays(10),
-          backColor: "#3c78d8",
-        },
-        {
-          id: 5,
-          text: "Event 5",
-          start: first.addDays(10),
-          end: first.addDays(10)
-        },
-      ]
+      events: events
     });
 
   }
 
-  updateColor(e, color) {
-    e.data.backColor = color;
+   updateColor(e, color) {
+    e.data.backColor = color
     this.calendar.events.update(e);
   }
-
+  async submitDB(){
+    
+    const event = this.calendar.events
+    const event_b = this.state.events
+    console.log(event)
+    console.log(event_b)
+    let list =[]
+    event_b.map( data =>{
+      if(data.id != undefined){
+        list.push({
+          id: data.id,
+          start: data.start,
+          end: data.end,
+          text: data.text
+        })
+      }
+    })
+    const resonse = await insertSchedule(list)
+    
+    
+  }
 
   render() {
     var {...config} = this.state;
@@ -145,6 +138,7 @@ class Month extends Component {
             this.calendar = component && component.control;
           }}
         />
+        <button className="button" onClick={() => this.submitDB()} > 저장 </button>
       </div>
     );
   }
